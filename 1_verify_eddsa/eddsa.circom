@@ -12,9 +12,20 @@ template VerifyEdDSAPoseidon(k) {
     
     // [assignment] Hash leaf using poseidon hasher
     component hasher;
+    hasher = Poseidon(3);
+    hasher.inputs[0] <== leaf[0];
+    hasher.inputs[1] <== leaf[1];
+    hasher.inputs[2] <== leaf[2];
     
     // [assignment] Add inputs to verifier
     component verifier = EdDSAPoseidonVerifier();   
+    verifier.enabled <== 1;
+    verifier.Ax <== from_x;
+    verifier.Ay <== from_y;
+    verifier.R8x <== R8x;
+    verifier.R8y <== R8y;
+    verifier.S <== S;
+    verifier.M <== hasher.out;
 
 }
 
